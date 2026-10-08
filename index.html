@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f3efe6">
+  <meta name="description" content="A small, interactive score about collaboration, pause and uncertainty. An educational, browser-only simulation. No agents, accounts or messages connected.">
+  <title>Motif — a score for working together</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2034%22%3E%3Cg%20fill%3D%22%239c442a%22%20stroke%3D%22%239c442a%22%20stroke-width%3D%221.4%22%3E%3Cpath%20d%3D%22M7%2026V9m9%2014V6m9%2014V3%22%2F%3E%3Cellipse%20cx%3D%224%22%20cy%3D%2227%22%20rx%3D%224%22%20ry%3D%223%22%2F%3E%3Cellipse%20cx%3D%2213%22%20cy%3D%2224%22%20rx%3D%224%22%20ry%3D%223%22%2F%3E%3Cellipse%20cx%3D%2222%22%20cy%3D%2221%22%20rx%3D%224%22%20ry%3D%223%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#score">Skip to the score</a>
+  <div class="page">
+    <header class="masthead">
+      <div class="wordmark" aria-label="Motif">
+        <svg class="brand-mark" viewBox="0 0 32 34" aria-hidden="true"><path d="M7 26V9m9 14V6m9 14V3"/><ellipse cx="4" cy="27" rx="4" ry="3"/><ellipse cx="13" cy="24" rx="4" ry="3"/><ellipse cx="22" cy="21" rx="4" ry="3"/></svg>
+        <span>motif</span>
+      </div>
+      <p class="masthead-note">A study in collaboration</p>
+      <nav class="header-links" aria-label="Project links">
+        <a href="https://github.com/cambridgetcg/motif-score">Source <span aria-hidden="true">↗</span></a>
+        <a href="https://huggingface.co/spaces/Yu-and-Ai/motif-score">Hugging Face <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow"><span class="small-rule" aria-hidden="true"></span> An interactive score, in three movements</p>
+          <h1 id="page-title">A score for<br><em>working together.</em></h1>
+        </div>
+        <div class="hero-note">
+          <p class="hero-refrain">A note. A pause. A return.</p>
+          <p>Small gestures make collaboration legible. Follow a request, leave room for silence, and let an unknown remain unknown.</p>
+          <p class="simulation-note"><strong>Browser-only simulation.</strong><br>No agents, accounts or messages connected.</p>
+        </div>
+      </section>
+
+      <section id="score" class="score" aria-label="Interactive collaboration score" tabindex="-1">
+        <div class="section-heading">
+          <h2 class="eyebrow"><span class="section-number">01</span> Choose a movement</h2>
+          <button id="random-scene" class="text-button" type="button" disabled><span aria-hidden="true">⤨</span> Random movement</button>
+        </div>
+        <div id="scene-controls" class="movements" role="group" aria-label="Choose a movement"></div>
+        <p class="selection-note">Changing movements starts a fresh sketch.</p>
+        <noscript><p class="noscript-note">Enable JavaScript to play through the score. The simulation runs only in this browser; it does not connect to an agent or account.</p></noscript>
+
+        <div class="sheet">
+          <header class="sheet-heading">
+            <div>
+              <p id="scene-kicker" class="eyebrow">Movement I · continuity / trust</p>
+              <h2 id="scene-title">A note arrives</h2>
+              <p id="scene-subtitle" class="scene-subtitle">A request becomes legible, one record at a time.</p>
+            </div>
+            <p class="tempo">At your own tempo<span>Nothing runs by itself.</span></p>
+          </header>
+
+          <figure class="notation">
+            <div class="notation-topline">
+              <span class="eyebrow">The recorded score</span>
+              <span id="phrase-count" class="mono">0 / 6 phrase beats</span>
+            </div>
+            <div class="staff-scroll" tabindex="0" role="region" aria-label="Recorded score illustration; scroll horizontally on a small screen">
+              <svg id="staff" class="staff" viewBox="0 0 1000 205" role="img" aria-labelledby="staff-title staff-description">
+                <title id="staff-title">An empty score</title>
+                <desc id="staff-description">The staff will show events from the simulation, placed by their resulting phase.</desc>
+              </svg>
+            </div>
+            <figcaption><span>Each mark is an event, placed by its resulting phase. No sound is played.</span><span class="notation-key"><i aria-hidden="true"></i> recorded <i class="refusal-key" aria-hidden="true"></i> refused</span></figcaption>
+          </figure>
+
+          <div class="conductor">
+            <div class="next-control">
+              <button id="next-beat" class="primary-button" type="button" aria-describedby="next-detail" disabled><span id="next-label">Next beat</span><span aria-hidden="true">→</span></button>
+              <p id="next-detail" class="next-detail">Let a note arrive</p>
+            </div>
+            <div class="utility-controls">
+              <button id="pause-toggle" class="secondary-button" type="button" disabled><span id="pause-symbol" aria-hidden="true">Ⅱ</span><span id="pause-label">Pause</span></button>
+              <button id="reset-sketch" class="text-button" type="button" disabled><span aria-hidden="true">↺</span> Reset sketch</button>
+            </div>
+          </div>
+
+          <div class="reading">
+            <div class="score-message" role="status" aria-live="polite" aria-atomic="true">
+              <span id="announcement" class="sr-only"></span>
+              <p class="eyebrow">The score says</p>
+              <p id="notice" class="notice">A quiet page. Let a note arrive.</p>
+              <p id="phrase-help" class="phrase-help">One click, one event. Begin with the next beat.</p>
+            </div>
+            <dl class="state-readout" aria-label="Actual simulation state">
+              <div><dt>Phase</dt><dd id="state-phase">empty</dd></div>
+              <div><dt>New work</dt><dd id="state-paused">not paused</dd></div>
+              <div><dt>Simulated attempts</dt><dd id="state-attempts">0</dd></div>
+              <div><dt>Receipt in flight</dt><dd id="state-flight">no</dd></div>
+            </dl>
+          </div>
+
+          <details id="manual-panel" class="manual-panel">
+            <summary><span>Try an event by hand</span><span class="summary-aside">Available actions <span class="disclosure-icon" aria-hidden="true">+</span></span></summary>
+            <div class="manual-content">
+              <p>Only events permitted by the current state are offered here. A manual event can change the course of the written phrase. Reset to begin it again.</p>
+              <div id="manual-events" class="manual-events" role="group" aria-label="Available manual events"></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="trace-section" aria-labelledby="trace-title">
+        <div class="section-heading trace-heading">
+          <div><h2 id="trace-title" class="eyebrow"><span class="section-number">02</span> The trace</h2><p>Only what happened. Nothing inferred.</p></div>
+          <p id="trace-count" class="mono">0 / 24 recent events</p>
+        </div>
+        <div id="empty-trace" class="empty-trace"><span aria-hidden="true">—</span><p>The first mark is yours.<small>Take a beat above. Its exact record will appear here.</small></p></div>
+        <ol id="trace-list" class="trace-list" aria-label="Recent event records, newest first" tabindex="-1" hidden></ol>
+        <p id="trace-footnote" class="trace-footnote">Newest event first. The last 24 events stay on this page; reset or reload clears them.</p>
+      </section>
+
+      <section class="coda" aria-labelledby="coda-title">
+        <div class="coda-heading"><p class="eyebrow">Notes in the margin</p><h2 id="coda-title">What makes a<br><em>shared rhythm?</em></h2></div>
+        <div class="margin-note"><span class="note-number">I.</span><h3>A record is not a command.</h3><p>Arrival, observation and acknowledgement are separate gestures. None is a simulated send.</p></div>
+        <div class="margin-note"><span class="note-number">II.</span><h3>A pause has meaning.</h3><p>An unsent note is cancelled. Resuming opens the room; it does not revive that note.</p></div>
+        <div class="margin-note"><span class="note-number">III.</span><h3>A return is not a resend.</h3><p>Inspecting an outcome adds a record, not an attempt. A missing answer stays unknown.</p></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p><span class="footer-wordmark">motif</span><span>An educational sketch, not a protocol implementation.<br>No audio, persistent storage or background activity.</span></p>
+      <a href="https://docs.agenttool.dev/COLLABORATION.md">Conceptual reference <span aria-hidden="true">↗</span></a>
+    </footer>
+  </div>
+</body>
+</html>
